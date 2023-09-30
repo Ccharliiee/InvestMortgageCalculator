@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import InvestCalc from "./components/InvestCalc.tsx/InvestCalc";
+import MortgageCalc from "./components/MortgageCalc/MortgageCalc";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </a>
       </header>
       <InvestCalc />
+      <MortgageCalc />
     </div>
   );
 }
