@@ -9,7 +9,7 @@ export default function InvestCalc() {
   const [userInput, setUserInput] = useState({
     currentSavings: 10000,
     annualContribution: 1000,
-    expectedReturn: 4,
+    expectedROIRate: 4,
     timePeriod: 20,
   });
 
@@ -17,7 +17,7 @@ export default function InvestCalc() {
     userInput: SetStateAction<{
       currentSavings: number;
       annualContribution: number;
-      expectedReturn: number;
+      expectedROIRate: number;
       timePeriod: number;
     }>
   ) => {
@@ -29,7 +29,7 @@ export default function InvestCalc() {
   if (userInput) {
     let currentSavings = +userInput.currentSavings;
     const annualContribution = +userInput.annualContribution;
-    const expectedReturn = +userInput.expectedReturn / 100;
+    const expectedReturn = +userInput.expectedROIRate / 100;
     const timePeriod = +userInput.timePeriod;
 
     for (let i = 0; i < timePeriod; i++) {

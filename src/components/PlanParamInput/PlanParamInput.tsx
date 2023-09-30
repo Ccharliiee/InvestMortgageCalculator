@@ -1,10 +1,12 @@
 import { useState } from "react";
 import classes from "./PlanParamInput.module.css";
 
+import InputComponent from "./InputComponent";
+
 const initialUserInput = {
   currentSavings: 10000,
   annualContribution: 1000,
-  expectedReturn: 4,
+  expectedROIRate: 4,
   timePeriod: 20,
 };
 
@@ -12,11 +14,34 @@ export default function PlanParamInput(props: {
   onCalculate: (arg0: {
     currentSavings: number;
     annualContribution: number;
-    expectedReturn: number;
+    expectedROIRate: number;
     timePeriod: number;
   }) => void;
 }) {
   const [planParam, setPlanParam] = useState(initialUserInput);
+
+  const planInputAttrs = [
+    {
+      id: "currentSavings",
+      name: "Current Savings ($)",
+      value: planParam.currentSavings,
+    },
+    {
+      id: "annualContribution",
+      name: "Annual Contribution ($)",
+      value: planParam.annualContribution,
+    },
+    {
+      id: "expectedROIRate",
+      name: " Expected Annual Interest Rate %",
+      value: planParam.expectedROIRate,
+    },
+    {
+      id: "investmentDuration",
+      name: "Investment Duration (years)",
+      value: planParam.timePeriod,
+    },
+  ];
 
   const submitHandler = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -28,11 +53,11 @@ export default function PlanParamInput(props: {
     setPlanParam(initialUserInput);
   };
 
-  const inputChangeHandler = (input: string, value: string) => {
+  const inputChangeHandler = (inputID: string, value: string) => {
     setPlanParam((prevInput) => {
       return {
         ...prevInput,
-        [input]: +value,
+        [inputID]: +value,
       };
     });
   };
@@ -40,56 +65,9 @@ export default function PlanParamInput(props: {
   return (
     <form onSubmit={submitHandler} className={classes.form}>
       <div className={classes["input-group"]}>
-        <p>
-          <label htmlFor="currentSavingss">Current Savings ($)</label>
-          <input
-            onChange={(event) =>
-              inputChangeHandler("currentSavings", event.target.value)
-            }
-            value={planParam.currentSavings}
-            type="number"
-            id="currentSavings"
-          />
-        </p>
-        <p>
-          <label htmlFor="annualContribution">Annual Contribution ($)</label>
-          <input
-            onChange={(event) =>
-              inputChangeHandler("annualContribution", event.target.value)
-            }
-            value={planParam.annualContribution}
-            type="number"
-            id="annualContribution"
-          />
-        </p>
-      </div>
-      <div className={classes["input-group"]}>
-        <p>
-          <label htmlFor="expectedReturn">
-            Expected Interest (%, per year)
-          </label>
-          <input
-            onChange={(event) =>
-              inputChangeHandler("expectedReturn", event.target.value)
-            }
-            value={planParam.expectedReturn}
-            type="number"
-            id="expectedReturn"
-          />
-        </p>
-        <p>
-          <label htmlFor="investmentDuration">
-            Investment Duration (years)
-          </label>
-          <input
-            onChange={(event) =>
-              inputChangeHandler("timePeriod", event.target.value)
-            }
-            value={planParam.timePeriod}
-            type="number"
-            id="investmentDuration"
-          />
-        </p>
+        {planInputAttrs.map((ia) => {
+          return <InputComponent {...{ ...ia, inputChangeHandler }} />;
+        })}
       </div>
       <p className={classes.actions}>
         <button
