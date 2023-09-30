@@ -37,7 +37,7 @@ export default function PlanParamInput(props: {
       value: planParam.expectedROIRate,
     },
     {
-      id: "investmentDuration",
+      id: "timePeriod",
       name: "Investment Duration (years)",
       value: planParam.timePeriod,
     },
